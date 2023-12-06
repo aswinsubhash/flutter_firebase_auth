@@ -1,8 +1,14 @@
+import 'package:firebase_auth_learning/pages/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'pages/login.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const FirebaseAuthApp());
 }
 
@@ -16,7 +22,7 @@ class FirebaseAuthApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
       ),
-      home:  LoginPage(),
+      home:  const AuthPage(),
     );
   }
 }

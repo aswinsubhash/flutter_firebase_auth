@@ -9,23 +9,24 @@ import 'package:firebase_auth_learning/widgets/custom_textfield.dart';
 import 'package:firebase_auth_learning/widgets/error_dialog.dart';
 import 'package:firebase_auth_learning/widgets/social_button.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function() onTap;
-  const LoginPage({
+  const RegisterPage({
     Key? key,
     required this.onTap,
   }) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  void signUserIn() async {
+  void signUserUp() async {
     showDialog(
       context: context,
       builder: (context) {
@@ -36,23 +37,30 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text('Password doesn\'t match!'),
+            backgroundColor: (Colors.red),
+          ),
+        );
+      }
 
       if (mounted) Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       if (mounted) Navigator.pop(context);
-
-      if (e.code == 'invalid-credential') {
-        if (mounted) {
-          errorDialog(
-            context,
-            'Invalid Credentials',
-            'Please check your email and password',
-          );
-        }
+      if (mounted) {
+        errorDialog(
+          context,
+          e.plugin,
+          e.message!,
+        );
       }
     }
   }
@@ -72,12 +80,11 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Image.asset(
                     'assets/images/Lock.png',
-                    width: 100,
-                    height: 100,
+                    width: 50,
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 25),
                   const Text(
-                    'Welcome back you\'ve been missed!',
+                    'Let\'s create an account for you!',
                     style: TextStyle(
                       color: AppColors.black75percent,
                       fontSize: 16,
@@ -96,22 +103,17 @@ class _LoginPageState extends State<LoginPage> {
                     isObscured: true,
                   ),
                   const SizedBox(height: 15),
-                  const Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.black75percent,
-                      ),
-                    ),
+                  CustomTextField(
+                    controller: confirmPasswordController,
+                    hintText: 'Confirm Password',
+                    isObscured: true,
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 25),
                   SizedBox(
                     height: 50,
                     child: CustomButton(
-                      text: 'Sign In',
-                      onPressed: signUserIn,
+                      text: 'Sign Up',
+                      onPressed: signUserUp,
                       textColor: AppColors.white,
                       buttonColor: AppColors.black,
                       radius: 8,
@@ -159,10 +161,10 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 50),
                   Text.rich(
                     TextSpan(
-                      text: 'Not a member? ',
+                      text: 'Already have an account? ',
                       children: [
                         TextSpan(
-                          text: 'Sign Up',
+                          text: 'Sign In',
                           style: const TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39676235675",
+    "project_id": "flutter-firebase-auth-b41b5",
+    "storage_bucket": "flutter-firebase-auth-b41b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39676235675:android:2d09c8f0379808f6bedb3e",
+        "android_client_info": {
+          "package_name": "com.example.firebase_auth_learning"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq_IKSbHVbUPro5FANkV7GJfJuIyud27o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
