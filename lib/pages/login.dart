@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(width: 10),
                       SocialButton(
                         imagePath: 'assets/images/Facebook.png',
-                        onTap: () {},
+                        onTap: () => AuthServices().signInWithFacebook(),
                       ),
                       const SizedBox(width: 10),
                       SocialButton(
