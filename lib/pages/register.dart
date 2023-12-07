@@ -153,8 +153,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(width: 10),
                       SocialButton(
-                        imagePath: 'assets/images/Github.png',
+                        imagePath: 'assets/images/Facebook.png',
                         onTap: () {},
+                      ),
+                      const SizedBox(width: 10),
+                      SocialButton(
+                        imagePath: 'assets/images/Git.png',
+                        onTap: () => AuthServices().signInWithGithub(),
                       ),
                     ],
                   ),

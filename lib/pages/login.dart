@@ -151,8 +151,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(width: 10),
                       SocialButton(
-                        imagePath: 'assets/images/Github.png',
+                        imagePath: 'assets/images/Facebook.png',
                         onTap: () {},
+                      ),
+                      const SizedBox(width: 10),
+                      SocialButton(
+                        imagePath: 'assets/images/Git.png',
+                        onTap: () => AuthServices().signInWithGithub(),
                       ),
                     ],
                   ),
